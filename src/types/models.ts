@@ -148,3 +148,25 @@ export enum RequestType {
   INVOICE_REVERSE = 'invoice_reverse',
   VOID = 'void',
 }
+
+// Add these new types
+export interface EstimateReference {
+  seriesName: string;
+  number: string;
+}
+
+export interface CreateInvoiceFromEstimateParams {
+  companyVatCode: string;
+  isDraft: boolean;
+  seriesName: string;
+  useEstimateDetails: true;
+  estimate: EstimateReference;
+  // Optional properties from CreateInvoiceParams
+  issueDate?: string;
+  currency?: string;
+  language?: string;
+  precision?: number;
+  dueDate?: string;
+  mentions?: string;
+  observations?: string;
+}

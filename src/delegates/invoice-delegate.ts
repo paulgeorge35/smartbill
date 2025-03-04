@@ -1,5 +1,6 @@
 import type {
   ApiResponse,
+  CreateInvoiceFromEstimateParams,
   CreateInvoiceParams,
   ReverseInvoiceParams
 } from '../types/models';
@@ -367,6 +368,36 @@ export class InvoiceDelegate extends BaseDelegate {
           ...params,
           subject: params.subject ? btoa(params.subject) : undefined,
           bodyText: params.bodyText ? btoa(params.bodyText) : undefined,
+        })
+      }
+    );
+  }
+
+  /**
+   * Creates a new invoice from an estimate
+   *
+   * @example
+   * ```typescript
+   * const invoice = await client.invoice.createFromEstimate({
+   *   companyVatCode: "RO12345678",
+   *   isDraft: false,
+   *   seriesName: "FCT",
+   *   useEstimateDetails: true,
+   *   estimate: {
+   *     seriesName: "PFCT",
+   *     number: "0203"
+   *   }
+   * });
+   */
+  async createFromEstimate(params: CreateInvoiceFromEstimateParams): Promise<ApiResponse<InvoiceCreateResponse>> {
+    return this.makeRequest<InvoiceCreateResponse>(
+      '/invoice',
+      RequestType.INVOICE_CREATE,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          ...params,
+          useEstimateDetails: true
         })
       }
     );
